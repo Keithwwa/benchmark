@@ -31,6 +31,7 @@ AISBench Benchmark 是基于 `OpenCompass <https://github.com/open-compass/openc
 
    get_started/install
    get_started/quick_start
+   base_tutorials/all_params/datasets
 
 .. toctree::
    :maxdepth: 1
