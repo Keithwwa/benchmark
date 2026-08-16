@@ -1,0 +1,78 @@
+ais_bench/benchmark/cli/workers.py
+  s_92718599420d4d::t_3e07fb0da24cef 470
+  s_92718599420d4d::t_649e580c3d1094 105-111
+tests/UT/models/api_models/test_base_api.py
+  s_92718599420d4d::t_500b5942fec664 602,608,610-625
+  s_92718599420d4d::t_8500a3ab073502 551-585,597-601,603-607,609,626-633,635-636,656-657
+  s_92718599420d4d::t_1be9911a785ba1 634,637-655
+  s_92718599420d4d::t_7191b18cd3c1d3 586-596
+ais_bench/benchmark/partitioners/base.py
+  s_92718599420d4d::t_6bad2f1f3de90f 40
+ais_bench/benchmark/models/api_models/base_api.py
+  s_92718599420d4d::t_afee2d31ecb7e2 91,111,326
+  s_92718599420d4d::t_7f2897af1d6bd0 283-287,290-294,297-305,307-308
+  s_92718599420d4d::t_c9f74bc5522db8 306
+  s_92718599420d4d::t_2032beef6e2e42 295-296,309-325
+  s_92718599420d4d::t_2e4812272dcc8c 16
+ais_bench/benchmark/utils/config/build.py
+  s_92718599420d4d::t_96f11a57f9a42a 130
+  s_92718599420d4d::t_10794fdd8917b4 152
+  s_92718599420d4d::t_2a8e2a0d94efd0 126-129,150-151,153-154
+ais_bench/benchmark/tasks/openicl_eval.py
+  s_92718599420d4d::t_ef3d6189586b3d 13
+  s_92718599420d4d::t_eb05306fcbcafa 27
+  s_92718599420d4d::t_169e9452b51077 66-71
+  s_92718599420d4d::t_2662a0bfcd3608 206-211
+  s_92718599420d4d::t_d4f5435c246083 296-297
+  s_92718599420d4d::t_6e3dd5f2d192b6 371-416
+tests/UT/utils/test_language_check.py
+  s_92718599420d4d::t_695296c629db40 9
+  s_92718599420d4d::t_cf32573686930f 4
+  s_92718599420d4d::t_06c70f100f7d55 57-58,60-67,70-83
+  s_92718599420d4d::t_eff64fe820fea9 59,68-69
+  s_92718599420d4d::t_78400c0d7f6965 40-56
+  s_92718599420d4d::t_a2cc8aa6958de6 1-3,5-8,10-39,84-124
+ais_bench/benchmark/utils/language_check.py
+  s_92718599420d4d::t_f9276476aa9def 71-98
+  s_92718599420d4d::t_8255b2b432f150 52-70
+  s_92718599420d4d::t_38696b0b060baa 1-8,10-51,99-164
+  s_92718599420d4d::t_a6d7bc9df423b1 9
+ais_bench/benchmark/cli/argument_parser.py
+  s_92718599420d4d::t_51dac12ec4d145 145-151
+tests/UT/tasks/test_openicl_eval.py
+  s_92718599420d4d::t_27dc1f62452322 87-88
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "3116bff710f361778924141f60816d6370b54739",
+  "prompts": {},
+  "humans": {
+    "h_14b089bc28a6d6": {
+      "author": "keith_wa <keith_wwa@163.com>"
+    }
+  },
+  "sessions": {
+    "s_92718599420d4d": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a8166ee1e5d356829412fca",
+        "model": "DeepSeek-V4-Flash-Official"
+      },
+      "human_author": "keith_wa <keith_wwa@163.com>",
+      "custom_attributes": {
+        "source_scene": "agent",
+        "runtime_client": "trae-tob-git-ai",
+        "client_type": "ide",
+        "operation_id": "6a8171431e5d356829413203",
+        "dedupe_key": "6a8166ee1e5d356829412fca:6a8171431e5d356829413203:afterEdit:60b195fd",
+        "session_id": "6a8166ee1e5d356829412fca",
+        "edit_kind": "file_edit",
+        "tool_id": "icube:applyChatSnapshotPatch",
+        "tool_use_id": "6a8171431e5d356829413203",
+        "tool_type": "builtin",
+        "external_session_id": "6a8166ee1e5d356829412fca"
+      }
+    }
+  }
+}
