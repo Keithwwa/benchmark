@@ -102,6 +102,13 @@ class Infer(BaseWorker):
         update_new_infer_cfg(new_cfg)
         cfg.merge_from_dict(new_cfg)
         cfg.infer.partitioner["out_dir"] = osp.join(cfg["work_dir"], "predictions/")
+        # Propagate the real-time language check to API (service) model
+        # wrappers, so each finished generation is checked as soon as the
+        # full content is received on the tool side.
+        if cfg.cli_args.check_language:
+            for model_cfg in cfg["models"]:
+                if model_cfg.get("attr") == "service":
+                    model_cfg["language_check"] = True
         return cfg
 
     def do_work(self, cfg: ConfigDict):
@@ -460,6 +467,7 @@ class Eval(BaseWorker):
             runner_cfg['debug'] = self.args.debug or cfg.cli_args.debug
             runner_cfg['task']['dump_details'] = cfg.cli_args.dump_eval_details
             runner_cfg['task']['cal_extract_rate'] = cfg.cli_args.dump_extract_rate
+            runner_cfg['task']['language_check'] = cfg.cli_args.check_language
 
         if cfg.get('eval'):
             new_cfg = dict(eval=cfg.eval)

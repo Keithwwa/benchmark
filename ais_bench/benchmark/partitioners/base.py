@@ -37,6 +37,7 @@ class BasePartitioner:
                 'eval.runner.task.dump_details',
                 'eval.given_pred',
                 'eval.runner.task.cal_extract_rate',
+                'eval.runner.task.language_check',
                 # Top-level experiment keys copied into each task cfg for subprocess
                 # (LocalRunner dumps task cfg; vbench reads VBENCH_CACHE_DIR before import).
                 'VBENCH_CACHE_DIR',

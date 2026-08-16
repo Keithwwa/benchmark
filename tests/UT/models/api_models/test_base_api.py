@@ -548,5 +548,112 @@ class TestAPITemplateParser(unittest.TestCase):
         self.assertEqual(result[2]["role"], "assistant")
 
 
+class TestBaseAPIModelLanguageCheck(unittest.TestCase):
+    """Real-time language check on the complete generated content."""
+
+    def setUp(self):
+        class ConcreteAPIModel(BaseAPIModel):
+            def _get_url(self):
+                return self.base_url + "test"
+
+            async def get_request_body(self, input_data, max_out_len, output, **args):
+                return {"prompt": input_data, "max_tokens": max_out_len}
+
+            async def parse_text_response(self, data, output):
+                output.content = data.get("response", "")
+
+        self.model = ConcreteAPIModel(
+            path="test-model", host_ip="127.0.0.1", host_port=8000,
+            language_check=True,
+        )
+
+    def _make_output(self, content, reasoning="", data_id=0):
+        output = Output()
+        output.content = content
+        output.reasoning_content = reasoning
+        output.data_id = data_id
+        return output
+
+    def test_pure_english_no_warning(self):
+        output = self._make_output(
+            "The correct answer is (A) because the reaction proceeds via SN2.",
+            data_id=1,
+        )
+        with mock.patch.object(self.model.logger, "warning") as warn:
+            self.model._check_language(output)
+        warn.assert_not_called()
+
+    def test_english_with_math_symbols_no_warning(self):
+        # 纯英文技术推理含 ×/– 等数学符号，不应误报为混杂
+        output = self._make_output(
+            "Total 3 combinations \u00d7 2 = 6 possible products. "
+            "Structure: CH2=CH\u2013CH(CH3)\u2013CH2\u2013CH3.",
+            data_id=7,
+        )
+        with mock.patch.object(self.model.logger, "warning") as warn:
+            self.model._check_language(output)
+        warn.assert_not_called()
+
+    def test_mixed_chinese_warns(self):
+        output = self._make_output(
+            "答案是 (A) because the mechanism is SN2 substitution.",
+            data_id=2,
+        )
+        output.uuid = "req-abc123"
+        with mock.patch.object(self.model.logger, "warning") as warn:
+            self.model._check_language(output)
+        warn.assert_called_once()
+        msg = warn.call_args.args[0]
+        self.assertIn("[lang-check]", msg)
+        self.assertIn("req-abc123", msg)
+        self.assertIn("chinese", msg)
+        self.assertIn("[[答案是]]", msg)  # 中文被标记，且带前后上下文
+
+    def test_chinese_context_only_around_run(self):
+        # 只打印中文前后约 20 个字符，不输出整条长内容
+        prefix = "a" * 50
+        suffix = "b" * 50
+        output = self._make_output(
+            prefix + "常规 answer" + suffix, data_id=3,
+        )
+        output.uuid = "req-xyz"
+        with mock.patch.object(self.model.logger, "warning") as warn:
+            self.model._check_language(output)
+        msg = warn.call_args.args[0]
+        self.assertIn("[[常规]]", msg)
+        self.assertNotIn(prefix, msg)  # 前 50 个字符被截断
+        self.assertNotIn(suffix, msg)  # 后 50 个字符被截断
+
+    def test_empty_content_no_warning(self):
+        output = self._make_output("", data_id=3)
+        with mock.patch.object(self.model.logger, "warning") as warn:
+            self.model._check_language(output)
+        warn.assert_not_called()
+
+    def test_check_disabled_does_not_run(self):
+        # generate() must skip the check when the flag is disabled
+        self.model.language_check = False
+        output = self._make_output("中文混合 English 内容", data_id=4)
+        with mock.patch.object(self.model, "text_infer") as text_infer, \
+                mock.patch.object(self.model, "_check_language") as check:
+            output.success = True
+            asyncio.run(
+                self.model.generate("prompt", 100, output, session=mock.AsyncMock())
+            )
+        check.assert_not_called()
+
+    def test_generate_checks_after_full_content(self):
+        # When enabled, the check runs right after the full generation finishes
+        self.model.language_check = True
+        output = self._make_output("The answer is (A).", data_id=5)
+        with mock.patch.object(self.model, "text_infer") as text_infer, \
+                mock.patch.object(self.model, "_check_language") as check:
+            output.success = True
+            asyncio.run(
+                self.model.generate("prompt", 100, output, session=mock.AsyncMock())
+            )
+        check.assert_called_once_with(output)
+
+
 if __name__ == "__main__":
     unittest.main()

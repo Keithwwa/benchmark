@@ -84,6 +84,8 @@ class TestOpenICLEvalTask(unittest.TestCase):
             'task', {}).get('dump_details', False)
         task.cal_extract_rate = cfg.get('eval', {}).get('runner', {}).get(
             'task', {}).get('cal_extract_rate', False)
+        task.language_check = cfg.get('eval', {}).get('runner', {}).get(
+            'task', {}).get('language_check', False)
         task.logger.debug(f"Dump details: {task.dump_details}, calculate extract rate: {task.cal_extract_rate}")
 
         # 设置默认的task_state_manager，因为_score方法需要它

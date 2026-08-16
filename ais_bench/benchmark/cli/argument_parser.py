@@ -142,6 +142,13 @@ class ArgumentParser():
             help='Whether to dump the extract rate of evaluation (samples per sec)',
             action='store_true',
         )
+        parser.add_argument(
+            '--check-language',
+            help='Whether to check predictions for non-English scripts (e.g. '
+            'mixed Chinese/English) during evaluation and dump a report log. '
+            'Useful for datasets that expect English-only answers, such as GPQA.',
+            action='store_true',
+        )
 
     def _perf_parser(self):
         """These args are all for the performance benchmark."""

@@ -10,7 +10,7 @@ import sys
 import time
 from collections import Counter
 from inspect import signature
-from typing import List
+from typing import List, Dict, Optional
 import mmap
 import orjson
 from collections import defaultdict
@@ -24,6 +24,7 @@ from ais_bench.benchmark.registry import (ICL_EVALUATORS, MODELS, TASKS,
 from ais_bench.benchmark.tasks.base import BaseTask, extract_role_pred
 from ais_bench.benchmark.utils.core.abbr import dataset_abbr_from_cfg, get_infer_output_path, task_abbr_from_cfg
 from ais_bench.benchmark.utils.core.types import check_type
+from ais_bench.benchmark.utils.language_check import language_check
 from ais_bench.benchmark.utils.config import build_dataset_from_cfg
 from ais_bench.benchmark.tasks.base import TaskStateManager
 from ais_bench.benchmark.utils.logging import AISLogger
@@ -62,7 +63,12 @@ class OpenICLEvalTask(BaseTask):
             'task', {}).get('dump_details', False)
         self.cal_extract_rate = cfg.get('eval', {}).get('runner', {}).get(
             'task', {}).get('cal_extract_rate', False)
-        self.logger.debug(f"Dump details: {self.dump_details}, calculate extract rate: {self.cal_extract_rate}")
+        self.language_check = cfg.get('eval', {}).get('runner', {}).get(
+            'task', {}).get('language_check', False)
+        self.logger.debug(
+            f"Dump details: {self.dump_details}, calculate extract rate: {self.cal_extract_rate}, "
+            f"language check: {self.language_check}"
+        )
 
     def get_command(self, cfg_path, template):
         sys.path.append(os.getcwd())
@@ -197,6 +203,12 @@ class OpenICLEvalTask(BaseTask):
             pred_dicts = copy.deepcopy(preds)
             preds = {k: [pred.get(k) for pred in preds] for k in preds[0]}
 
+            # Optional: check raw predictions for non-English scripts (e.g.
+            # mixed Chinese/English), only when --check-language is enabled.
+            lang_check_summary = None
+            if self.language_check:
+                lang_check_summary = self._run_language_check(pred_dicts)
+
             pred_strs = preds.pop('prediction', None)
             pred_list_flag = pred_strs is not None and isinstance(
                 pred_strs[0], list)
@@ -281,6 +293,8 @@ class OpenICLEvalTask(BaseTask):
                 for k in signature(icl_evaluator.score).parameters
             }
             result = icl_evaluator.evaluate(k, n, copy.deepcopy(test_set), **preds)
+            if lang_check_summary is not None:
+                result['lang_check'] = lang_check_summary
 
             # Get model postprocess result
             model_details = None
@@ -353,6 +367,52 @@ class OpenICLEvalTask(BaseTask):
         mkdir_or_exist(osp.split(out_path)[0])
         self.logger.debug(f"Save result to {out_path}")
         mmengine.dump(result, out_path, ensure_ascii=False, indent=4)
+
+    def _run_language_check(self, pred_dicts: List[Dict]) -> Optional[Dict]:
+        """Scan raw predictions for non-English scripts (e.g. mixed Chinese).
+
+        The check runs on the raw model output (``prediction``) rather than the
+        post-processed answer. A JSONL report is written next to the evaluation
+        result, containing every sample with non-ASCII characters.
+
+        Args:
+            pred_dicts: list of raw prediction dicts (each with 'prediction').
+
+        Returns:
+            A summary dict without the detailed entries, or None on failure.
+        """
+        try:
+            preds = [d.get('prediction', '') for d in pred_dicts]
+            ids = [d.get('id', i) for i, d in enumerate(pred_dicts)]
+            report = language_check(preds, pred_ids=ids)
+        except Exception as e:
+            self.logger.warning(f'Skip language check due to: {e}')
+            return None
+
+        out_path = get_infer_output_path(
+            self.model_cfg, self.dataset_cfg,
+            osp.join(self.work_dir, 'results'))
+        report_path = osp.splitext(out_path)[0] + '_lang_check.jsonl'
+        mkdir_or_exist(osp.split(report_path)[0])
+        try:
+            with open(report_path, 'w', encoding='utf-8') as f:
+                for detail in report['details']:
+                    f.write(
+                        orjson.dumps(
+                            detail,
+                            option=orjson.OPT_NON_STR_KEYS,
+                        ).decode('utf-8') + '\n')
+            self.logger.info(f'Language check report saved to {report_path}')
+        except Exception as e:
+            self.logger.warning(f'Failed to write language check report: {e}')
+
+        summary = {k: report[k] for k in report if k != 'details'}
+        self.logger.info(f'Language check summary: {summary}')
+        if report['has_chinese']:
+            self.logger.warning(
+                f'Found {report["has_chinese"]}/{report["total"]} predictions '
+                'containing Chinese characters (expected pure English).')
+        return summary
 
     def extract_rate(self, results):
         """This function is designed for calculating the extraction rate.

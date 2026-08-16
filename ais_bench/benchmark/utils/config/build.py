@@ -123,6 +123,11 @@ def build_dataset_from_cfg(dataset_cfg: ConfigDict, task_state_manager: Any = No
 def build_model_from_cfg(model_cfg: ConfigDict):
     logger.debug(f"Building model from config: type={model_cfg.get('type')} abbr={model_cfg.get('abbr')}")
     model_cfg = copy.deepcopy(model_cfg)
+    # Real-time language check flag: not a constructor arg. It is applied to
+    # the built API model instance below, so wrappers without the param are
+    # not broken by an unexpected keyword argument.
+    language_check_flag = bool(model_cfg.get("language_check", False))
+    is_api_model = model_cfg.get("attr") == "service"
     model_name = model_cfg.get("type", "").split(".")[-1]
     errors = _validate_model_cfg(model_cfg)
     if errors:
@@ -142,7 +147,11 @@ def build_model_from_cfg(model_cfg: ConfigDict):
     model_cfg.pop("min_out_len", None)
     model_cfg.pop("returns_tool_calls", None)
     model_cfg.pop("traffic_cfg", None)
-    return MODELS.build(model_cfg)
+    model_cfg.pop("language_check", None)
+    model = MODELS.build(model_cfg)
+    if language_check_flag and is_api_model:
+        model.language_check = True
+    return model
 
 def build_perf_metric_calculator_from_cfg(metric_cfg: ConfigDict):
     logger.debug(f"Building perf metric calculator config: type={metric_cfg.get('type')}")

@@ -13,6 +13,7 @@ import requests
 import aiohttp
 
 from ais_bench.benchmark.utils.logging.logger import AISLogger
+from ais_bench.benchmark.utils.language_check import chinese_context, significant_scripts
 from ais_bench.benchmark.utils.logging.error_codes import MODEL_CODES
 from ais_bench.benchmark.utils.logging.exceptions import (
     AISBenchNotImplementedError,
@@ -87,6 +88,7 @@ class BaseAPIModel(BaseModel):
         enable_ssl: bool = False,
         verbose: bool = False,
         api_key: str = "",
+        language_check: bool = False,
     ):
         if not BaseAPIModel.init_flag:
             self.logger = MockAISLogger()
@@ -106,6 +108,7 @@ class BaseAPIModel(BaseModel):
         self.template_parser = APITemplateParser(self.meta_template)
         self.generation_kwargs = generation_kwargs
         self.verbose = verbose
+        self.language_check = language_check
         self.session = None
         self.base_url = self._get_base_url()
 
@@ -277,7 +280,49 @@ class BaseAPIModel(BaseModel):
         if close_session:
             self.logger.debug(f"Waiting for session close ...")
             await self.session.close()
+        # The full generated content of this request has now been received on
+        # the tool side. If enabled, check it immediately for non-English
+        # scripts (e.g. mixed Chinese/English) and warn in real time.
+        if self.language_check and output.success:
+            self._check_language(output)
         return output
+
+    def _check_language(self, output) -> None:
+        """Real-time language check on the complete generated content.
+
+        Warns immediately if the finished output of a single request contains
+        non-English scripts (GPQA and similar datasets expect pure English).
+        For Chinese mixing, only the request id and the ~20 characters around
+        each Chinese run are printed to keep the log concise.
+        """
+        try:
+            pred = output.get_prediction()
+        except AttributeError:
+            pred = output.content
+        if isinstance(pred, list):
+            pred = '\n'.join(str(p) for p in pred)
+        if not isinstance(pred, str) or not pred:
+            return
+        scripts = significant_scripts(pred)
+        if not scripts:
+            return
+        request_id = getattr(output, 'uuid', None) or getattr(output, 'data_id', None)
+        if request_id is None:
+            request_id = '-'
+        spans = chinese_context(pred)
+        if spans:
+            self.logger.warning(
+                '[lang-check] request %s: mixed Chinese/English detected '
+                '(scripts=%s), context around Chinese:\n%s',
+                request_id, sorted(scripts),
+                '\n'.join('  ' + s for s in spans),
+            )
+        else:
+            self.logger.warning(
+                '[lang-check] request %s: generated content contains '
+                'non-English scripts %s',
+                request_id, sorted(scripts),
+            )
 
     async def stream_infer(self, request_body: dict, output: Output):
         await output.record_time_point()
