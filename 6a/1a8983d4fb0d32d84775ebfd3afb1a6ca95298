@@ -1,0 +1,39 @@
+ais_bench/benchmark/configs/datasets/corpusqa/corpusqa_1m_gen.py
+  s_d56ebe3b091eed::t_292a3f09d71157 54
+  s_d56ebe3b091eed::t_1fd3d15809a914 34-36
+  h_14b089bc28a6d6 49,53
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "6a1a8983d4fb0d32d84775ebfd3afb1a6ca95298",
+  "prompts": {},
+  "humans": {
+    "h_14b089bc28a6d6": {
+      "author": "keith_wa <keith_wwa@163.com>"
+    }
+  },
+  "sessions": {
+    "s_d56ebe3b091eed": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a800fd31e5d356829412847",
+        "model": "DeepSeek-V4-Flash-Official"
+      },
+      "human_author": "keith_wa <keith_wwa@163.com>",
+      "custom_attributes": {
+        "tool_id": "icube:applyChatSnapshotPatch",
+        "operation_id": "6a8c4ef71e5d356829413562",
+        "client_type": "ide",
+        "dedupe_key": "6a800fd31e5d356829412847:6a8c4ef71e5d356829413562:afterEdit:b913fa33",
+        "source_scene": "agent",
+        "tool_use_id": "6a8c4ef71e5d356829413562",
+        "session_id": "6a800fd31e5d356829412847",
+        "tool_type": "builtin",
+        "runtime_client": "trae-tob-git-ai",
+        "external_session_id": "6a800fd31e5d356829412847",
+        "edit_kind": "file_edit"
+      }
+    }
+  }
+}
