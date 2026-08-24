@@ -1,0 +1,42 @@
+ais_bench/benchmark/datasets/corpusqa.py
+  s_d56ebe3b091eed::t_f783226aff6750 39-41,43,45-47,51,53-54
+  s_d56ebe3b091eed::t_4fe0bac1325671 231-234,237-241
+  s_d56ebe3b091eed::t_14bb47bf96b385 150-169
+ais_bench/benchmark/configs/datasets/corpusqa/corpusqa_1m_gen.py
+  s_d56ebe3b091eed::t_661ac4efaced71 72-74,76
+  s_d56ebe3b091eed::t_751dd20d8695dd 4-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "5a58603b9bf9f18fcb5ddf12bbe690e4e53336de",
+  "prompts": {},
+  "humans": {
+    "h_14b089bc28a6d6": {
+      "author": "keith_wa <keith_wwa@163.com>"
+    }
+  },
+  "sessions": {
+    "s_d56ebe3b091eed": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a800fd31e5d356829412847",
+        "model": "DeepSeek-V4-Flash-Official"
+      },
+      "human_author": "keith_wa <keith_wwa@163.com>",
+      "custom_attributes": {
+        "external_session_id": "6a800fd31e5d356829412847",
+        "runtime_client": "trae-tob-git-ai",
+        "tool_use_id": "6a8bc6901e5d35682941348b",
+        "edit_kind": "file_edit",
+        "source_scene": "agent",
+        "operation_id": "6a8bc6901e5d35682941348b",
+        "client_type": "ide",
+        "tool_id": "icube:applyChatSnapshotPatch",
+        "tool_type": "builtin",
+        "dedupe_key": "6a800fd31e5d356829412847:6a8bc6901e5d35682941348b:afterEdit:b913fa33",
+        "session_id": "6a800fd31e5d356829412847"
+      }
+    }
+  }
+}
