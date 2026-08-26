@@ -1,0 +1,39 @@
+ais_bench/benchmark/configs/datasets/corpusqa/README_en.md
+  s_d56ebe3b091eed::t_7e3e2b26b01c9b 25-27
+ais_bench/benchmark/configs/datasets/corpusqa/README.md
+  s_d56ebe3b091eed::t_cd332b99891805 25-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "1aa4b5e75ffa76cc25fa57bd48b370e685d95d3a",
+  "prompts": {},
+  "humans": {
+    "h_14b089bc28a6d6": {
+      "author": "keith_wa <keith_wwa@163.com>"
+    }
+  },
+  "sessions": {
+    "s_d56ebe3b091eed": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a800fd31e5d356829412847",
+        "model": "DeepSeek-V4-Flash-Official"
+      },
+      "human_author": "keith_wa <keith_wwa@163.com>",
+      "custom_attributes": {
+        "tool_use_id": "6a8eb2101e5d356829413e14",
+        "operation_id": "6a8eb2101e5d356829413e14",
+        "runtime_client": "trae-tob-git-ai",
+        "external_session_id": "6a800fd31e5d356829412847",
+        "client_type": "ide",
+        "tool_type": "builtin",
+        "session_id": "6a800fd31e5d356829412847",
+        "tool_id": "icube:applyChatSnapshotPatch",
+        "dedupe_key": "6a800fd31e5d356829412847:6a8eb2101e5d356829413e14:afterEdit:711b754f",
+        "source_scene": "agent",
+        "edit_kind": "file_edit"
+      }
+    }
+  }
+}
