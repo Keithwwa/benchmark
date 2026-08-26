@@ -1,0 +1,43 @@
+ais_bench/benchmark/configs/datasets/corpusqa/README_en.md
+  s_d56ebe3b091eed::t_dff4071395d258 1-27
+docs/source_zh_cn/get_started/datasets.md
+  s_d56ebe3b091eed::t_1555b38348cf6a 63
+ais_bench/benchmark/configs/datasets/corpusqa/README.md
+  s_d56ebe3b091eed::t_ed03e18e5f1297 1-27
+docs/source_en/get_started/datasets.md
+  s_d56ebe3b091eed::t_f01c683329a166 63
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "17b3f5967523a474cd017a95ddb373ced1feb599",
+  "prompts": {},
+  "humans": {
+    "h_14b089bc28a6d6": {
+      "author": "keith_wa <keith_wwa@163.com>"
+    }
+  },
+  "sessions": {
+    "s_d56ebe3b091eed": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a800fd31e5d356829412847",
+        "model": "DeepSeek-V4-Flash-Official"
+      },
+      "human_author": "keith_wa <keith_wwa@163.com>",
+      "custom_attributes": {
+        "edit_kind": "file_edit",
+        "external_session_id": "6a800fd31e5d356829412847",
+        "dedupe_key": "6a800fd31e5d356829412847:6a8e99c91e5d356829413d4b:afterEdit:806a52f3",
+        "tool_type": "builtin",
+        "source_scene": "agent",
+        "runtime_client": "trae-tob-git-ai",
+        "tool_use_id": "6a8e99c91e5d356829413d4b",
+        "tool_id": "icube:applyChatSnapshotPatch",
+        "client_type": "ide",
+        "operation_id": "6a8e99c91e5d356829413d4b",
+        "session_id": "6a800fd31e5d356829412847"
+      }
+    }
+  }
+}
