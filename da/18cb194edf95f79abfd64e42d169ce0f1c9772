@@ -1,0 +1,40 @@
+ais_bench/benchmark/openicl/icl_inferencer/output_handler/gen_inferencer_output_handler.py
+  s_b9b8d442762738::t_d3c704388caed3 72-80
+ais_bench/benchmark/datasets/corpusqa.py
+  s_b9b8d442762738::t_1d3f7ef8130b88 187-195,197-201,206-214
+  s_b9b8d442762738::t_86a6226c149356 278-288,292-294
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "da18cb194edf95f79abfd64e42d169ce0f1c9772",
+  "prompts": {},
+  "humans": {
+    "h_14b089bc28a6d6": {
+      "author": "keith_wa <keith_wwa@163.com>"
+    }
+  },
+  "sessions": {
+    "s_b9b8d442762738": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a8e4d0a1e5d356829413bdf",
+        "model": "glm-5.3"
+      },
+      "human_author": "keith_wa <keith_wwa@163.com>",
+      "custom_attributes": {
+        "runtime_client": "trae-tob-git-ai",
+        "external_session_id": "6a8e4d0a1e5d356829413bdf",
+        "tool_type": "builtin",
+        "edit_kind": "file_edit",
+        "operation_id": "6a8e50cd1e5d356829413c8b",
+        "tool_use_id": "6a8e50cd1e5d356829413c8b",
+        "dedupe_key": "6a8e4d0a1e5d356829413bdf:6a8e50cd1e5d356829413c8b:afterEdit:b913fa33",
+        "session_id": "6a8e4d0a1e5d356829413bdf",
+        "source_scene": "agent",
+        "tool_id": "icube:applyChatSnapshotPatch",
+        "client_type": "ide"
+      }
+    }
+  }
+}
