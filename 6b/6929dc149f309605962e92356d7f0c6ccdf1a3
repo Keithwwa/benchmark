@@ -1,0 +1,43 @@
+ais_bench/benchmark/datasets/mrcr.py
+  s_b9b8d442762738::t_330ba06fd94d62 56
+  s_b9b8d442762738::t_e5c049c7aa453e 247-264
+  s_b9b8d442762738::t_f3e16553837188 92-110,138-139,144,146-147,150-166,170-179
+tests/UT/datasets/test_mrcr.py
+  s_b9b8d442762738::t_392e3384a5796c 5-12
+  s_b9b8d442762738::t_42081b36fb8d16 86,99-108,110-191
+  s_b9b8d442762738::t_7f7e6d15c4561f 284-296
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "6b6929dc149f309605962e92356d7f0c6ccdf1a3",
+  "prompts": {},
+  "humans": {
+    "h_14b089bc28a6d6": {
+      "author": "keith_wa <keith_wwa@163.com>"
+    }
+  },
+  "sessions": {
+    "s_b9b8d442762738": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a8e4d0a1e5d356829413bdf",
+        "model": "glm-5.3"
+      },
+      "human_author": "keith_wa <keith_wwa@163.com>",
+      "custom_attributes": {
+        "tool_type": "builtin",
+        "external_session_id": "6a8e4d0a1e5d356829413bdf",
+        "source_scene": "agent",
+        "edit_kind": "file_edit",
+        "operation_id": "6a957f2d1e5d35682941425b",
+        "tool_id": "icube:applyChatSnapshotPatch",
+        "dedupe_key": "6a8e4d0a1e5d356829413bdf:6a957f2d1e5d35682941425b:afterEdit:38811bea",
+        "client_type": "ide",
+        "tool_use_id": "6a957f2d1e5d35682941425b",
+        "runtime_client": "trae-tob-git-ai",
+        "session_id": "6a8e4d0a1e5d356829413bdf"
+      }
+    }
+  }
+}
