@@ -1,0 +1,43 @@
+tests/UT/datasets/test_mrcr.py
+  s_b9b8d442762738::t_008a9fad2d4186 220,222,224-226
+ais_bench/benchmark/datasets/mrcr.py
+  s_b9b8d442762738::t_0b16ee234f3870 69-75
+  s_b9b8d442762738::t_d5b910f2096c82 63-67
+ais_bench/benchmark/configs/datasets/mrcr/mrcr_1m_gen.py
+  s_b9b8d442762738::t_d40f28e2183dea 64-65
+  s_b9b8d442762738::t_b8046853675128 18-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "76a0da719296c99f85c177e42cb12aa324de8624",
+  "prompts": {},
+  "humans": {
+    "h_14b089bc28a6d6": {
+      "author": "keith_wa <keith_wwa@163.com>"
+    }
+  },
+  "sessions": {
+    "s_b9b8d442762738": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a8e4d0a1e5d356829413bdf",
+        "model": "glm-5.3"
+      },
+      "human_author": "keith_wa <keith_wwa@163.com>",
+      "custom_attributes": {
+        "source_scene": "agent",
+        "edit_kind": "file_edit",
+        "runtime_client": "trae-tob-git-ai",
+        "tool_id": "icube:applyChatSnapshotPatch",
+        "client_type": "ide",
+        "tool_use_id": "6a95750e1e5d3568294141ab",
+        "operation_id": "6a95750e1e5d3568294141ab",
+        "tool_type": "builtin",
+        "session_id": "6a8e4d0a1e5d356829413bdf",
+        "external_session_id": "6a8e4d0a1e5d356829413bdf",
+        "dedupe_key": "6a8e4d0a1e5d356829413bdf:6a95750e1e5d3568294141ab:afterEdit:38811bea"
+      }
+    }
+  }
+}
