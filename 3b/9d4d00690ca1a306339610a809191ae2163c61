@@ -1,0 +1,12 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "3b9d4d00690ca1a306339610a809191ae2163c61",
+  "prompts": {},
+  "humans": {
+    "h_14b089bc28a6d6": {
+      "author": "keith_wa <keith_wwa@163.com>"
+    }
+  }
+}
