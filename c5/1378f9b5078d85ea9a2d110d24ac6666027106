@@ -1,0 +1,45 @@
+ais_bench/benchmark/configs/datasets/mrcr/README_en.md
+  s_b36bb70f29d1b5::t_eaf970b186d712 78-80
+  s_b36bb70f29d1b5::t_e1189c7ba5a24c 1-77,81-89
+ais_bench/benchmark/configs/datasets/mrcr/README.md
+  s_b36bb70f29d1b5::t_5b10e21875a24c 1-77,81-89
+  s_b36bb70f29d1b5::t_df79b02343e12f 78-80
+docs/source_zh_cn/get_started/datasets.md
+  s_b36bb70f29d1b5::t_3e52c125116f77 46-47
+docs/source_en/get_started/datasets.md
+  s_b36bb70f29d1b5::t_5f03b77f7ac3eb 47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.2",
+  "base_commit_sha": "c51378f9b5078d85ea9a2d110d24ac6666027106",
+  "prompts": {},
+  "humans": {
+    "h_14b089bc28a6d6": {
+      "author": "keith_wa <keith_wwa@163.com>"
+    }
+  },
+  "sessions": {
+    "s_b36bb70f29d1b5": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a9807681e5d35682941439f",
+        "model": "glm-5.3"
+      },
+      "human_author": "keith_wa <keith_wwa@163.com>",
+      "custom_attributes": {
+        "operation_id": "6a9810c21e5d3568294144bf",
+        "edit_kind": "file_edit",
+        "dedupe_key": "6a9807681e5d35682941439f:6a9810c21e5d3568294144bf:afterEdit:7d2fd739",
+        "tool_id": "icube:applyChatSnapshotPatch",
+        "client_type": "ide",
+        "tool_type": "builtin",
+        "session_id": "6a9807681e5d35682941439f",
+        "tool_use_id": "6a9810c21e5d3568294144bf",
+        "external_session_id": "6a9807681e5d35682941439f",
+        "source_scene": "agent",
+        "runtime_client": "trae-tob-git-ai"
+      }
+    }
+  }
+}
